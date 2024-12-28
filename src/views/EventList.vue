@@ -50,7 +50,7 @@
           })
       },
       handleEdit(eventId) {
-        this.$router.push(`/events/edit/${eventId}`);
+        this.$router.push(`/editEvent/${eventId}`);
       },
       handleDelete(eventId) {
         this.$confirm("确定删除此活动吗？", "提示", {
@@ -61,7 +61,7 @@
           .then(() => {
             // 发送删除请求
             axios
-              .get("/api/events/delete")
+              .post("/api/events/delete", {eventId: eventId})
               .then((res) => {
                 if (res.data.code === 1) {
                   this.$message.success("活动已删除！");

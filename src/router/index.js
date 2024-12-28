@@ -47,6 +47,13 @@ export default new Router({
       meta: { title: '活动详情' },
       props: true, // 将路由参数注入到组件 props 中
     },
+    {
+      path: "/editEvent/:eventId",
+      name: "EditEvent",
+      component: () => import("@/views/EditEvent.vue"),
+      meta: { title:'编辑活动', requiresAuth: true }, // 需要登录
+      props: true,
+    },
     // 默认路径重定向
     { path: '*', redirect: '/login' },
     
