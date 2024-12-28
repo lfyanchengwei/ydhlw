@@ -1,29 +1,54 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-Vue.use(VueRouter)
+import EventList from "@/views/EventList";
+import Login from "@/views/Login";
+import EventListPage from '@/views/EventOverview.vue'; // 活动列表页面
+import EventDetailPage from '@/views/EventDetail.vue'; // 活动详情页面
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+Vue.use(Router);
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
-
-export default router
+export default new Router({
+  routes: [
+    {
+      path: "/login",
+      name: "Login",
+      component: Login,
+      meta: { title:'登录' },
+    },
+    {
+      path: "/newEvent",
+      name: "NewEvent",
+      component: () => import("@/views/NewEvent.vue"),
+      meta: { requiresAuth: true,title:'增加活动' }, // 需要登录
+    },
+    {
+      path: "/eventList",
+      name: "EventList",
+      component: EventList,
+      meta: { requiresAuth: true, title:'活动列表' }, // 需要登录
+    },
+    {
+      path:"/registrationPending",
+      name: "RegistrationPending",
+      component: () => import("@/views/RegistrationPage.vue"),
+      meta: { requiresAuth: true,title:'报名列表' }, // 需要登录
+    },
+    {
+      path: '/eventOverview',
+      name: 'EventList',
+      component: EventListPage,
+      meta: { title: '活动情况' }, // 设置页面标题
+    },
+    {
+      path: '/event/:eventId',
+      name: 'EventDetail',
+      component: EventDetailPage,
+      meta: { title: '活动详情' },
+      props: true, // 将路由参数注入到组件 props 中
+    },
+    // 默认路径重定向
+    { path: '*', redirect: '/login' },
+    
+  ],
+});
