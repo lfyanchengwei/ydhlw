@@ -6,7 +6,7 @@
       <el-main>
         <div class="filters">
           <label for="eventId">活动筛选：</label>
-          <el-select v-model="selectedEventId" placeholder="请选择活动" @change="fetchRegistrations">
+          <el-select v-model="selectedEventId" placeholder="请选择活动" @change="fetchRegistrations" :lismit="5">
             <el-option label="全部" value=""></el-option>
             <el-option v-for="event in events" :key="event.eventId" :label="event.title" :value="event.eventId"></el-option>
           </el-select>
@@ -98,7 +98,7 @@
         getEventList()
           .then((response) => {
             console.log(response);
-            this.events = response.data.data.records;
+            this.events = response.data.data;
           })
           .catch((error) => {
             console.error("Failed to fetch events:", error);
