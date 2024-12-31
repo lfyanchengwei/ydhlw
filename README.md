@@ -1,5 +1,7 @@
+# 后台管理端
+基于Vue2+Element-ui的后台管理端，简单易上手
 # 配置数据库表
-见sql文件
+sql文件见public文件夹
 # 安装依赖,如果下载没成功尝试cnpm
 '''
 npm install
